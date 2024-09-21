@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Form</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f6f6f6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            flex-direction: row;
+        }
+
+        /* Left section */
+        .left-section {
+            width: 70%;
+            padding: 20px;
+            border-right: 1px solid #e6e6e6;
+        }
+
+        .header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .customer-info, .payment-info, .total-info {
+            margin-bottom: 20px;
+        }
+
+        .customer-info p, .payment-info p, .total-info p {
+            margin-bottom: 5px;
+            line-height: 1.6;
+        }
+
+        .customer-info {
+            border-bottom: 1px solid #e6e6e6;
+            padding-bottom: 10px;
+        }
+
+        .payment-info .price {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .due-date {
+            font-size: 12px;
+            font-weight: bold;
+            color: #555;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .due-date span {
+            background-color: #f7f7f7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 10px;
+        }
+
+        .items {
+            border-bottom: 1px solid #e6e6e6;
+            padding-bottom: 20px;
+            margin-bottom: 10px;
+        }
+
+        .items table {
+            width: 100%;
+            margin-top: 10px;
+            border-collapse: collapse;
+        }
+
+        .items th, .items td {
+            text-align: left;
+            padding: 10px;
+        }
+
+        .items th {
+            background-color: #f6f6f6;
+        }
+
+        .items td {
+            border-bottom: 1px solid #e6e6e6;
+        }
+
+        .total-info p {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* Right section */
+        .right-section {
+            width: 30%;
+            padding: 20px;
+            background-color: #f6f6f6;
+        }
+
+        /* Recuadro: PDF and update info */
+        .pdf-link {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+
+        .pdf-link a {
+            color: #0070ba;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .update-info {
+            font-size: 12px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* Recuadro: Payment summary */
+        .summary {
+            border: 1px solid #e6e6e6;
+            padding: 15px;
+            background-color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .summary p {
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .amount-due {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        /* Recuadro: Payment options */
+        .payment-method {
+            border: 1px solid #e6e6e6;
+            padding: 15px;
+            background-color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .button-paypal {
+            background-color: #ffc439;
+            color: #333;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .button-card {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            display: block;
+        }
+
+        .payment-method span {
+            font-size: 12px;
+            color: #555;
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        /* Recuadro: Report payment */
+        .report-payment {
+            border: 1px solid #e6e6e6;
+            padding: 15px;
+            background-color: #fff;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .report-payment a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer {
+            font-size: 12px;
+            text-align: center;
+            color: #777;
+            margin-top: 20px;
+        }
+
+        .footer a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .left-section, .right-section {
+                width: 100%;
+                border: none;
+            }
+
+            .right-section {
+                margin-top: 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                font-size: 20px;
+            }
+
+            .payment-info .price {
+                font-size: 28px;
+            }
+
+            .amount-due {
+                font-size: 20px;
+            }
+
+            .button-paypal, .button-card {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+
+            .due-date {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Left section -->
+    <div class="left-section">
+        <!-- Header -->
+        <div class="header">Payment format for "Company Name"</div>
+
+        <!-- Customer Info -->
+        <div class="customer-info">
+            <p><strong>Company Name</strong></p>
+            <p>Calle 30, Colosio</p>
+            <p>77710 Solidaridad, Q ROO, MEXICO</p>
+            <p>Email: company.name@gmail.com</p>
+            <p>Phone: +52 123 456 789</p>
+        </div>
+
+        <!-- Payment Info -->
+        <div class="payment-info">
+            <p><strong>Charge to:</strong> ticharge@gmail.com</p>
+            <p class="price">$1,111.00</p>
+            <div class="due-date">DUE DATE <span>Sep 21, 2024</span></div>
+        </div>
+
+        <!-- Items -->
+        <div class="items">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Items</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Item to be paid</td>
+                        <td>$1,111.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Total Info -->
+        <div class="total-info">
+            <p><strong>Subtotal:</strong> $1,111.00</p>
+            <p><strong>Total:</strong> $1,111.00</p>
+        </div>
+    </div>
+
+    <!-- Right section -->
+    <div class="right-section">
+        <!-- Recuadro: PDF and update info -->
+        <!-- <div class="pdf-link">
+            <a href="#">Download PDF</a>
+        </div>-->
+        <div class="update-info">
+            Last updated on September 21, 2024, 10:27:25 AM PDT
+        </div>
+
+        <!-- Recuadro: Payment summary -->
+        <div class="summary">
+            <p style="font-size: 12px;">Amount Due:</p>
+            <p class="amount-due" style="font-size: 30px;">$1,111.00</p>
+        </div>
+
+        <!-- Recuadro: Payment options -->
+        <div class="payment-method">
+            <a href="#" class="button-paypal">Pay with PayPal</a>
+            <!-- <a href="#" class="button-card">Pay with Debit or Credit Card</a> -->
+            <span>Processed by PayPal</span>
+        </div>
+
+        <!-- Recuadro: Report payment -->
+        <div class="report-payment">
+            <p>Don't recognize this payment?</p>
+            <a href="#">Report this payment format</a>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    © 1999–2024 PayPal. All rights reserved. <a href="#">Privacy Policy</a>
+</div>
+
+</body>
+</html>
